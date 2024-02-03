@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TestFormApp
@@ -18,7 +15,8 @@ namespace TestFormApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Tests.Start();
+            Data.Actions.Polygon.PolygonMinuteScan.Start();
+            // Tests.Start();
 
             Application.Run(new Form1());
         }

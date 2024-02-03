@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestFormApp
 {
@@ -11,9 +7,9 @@ namespace TestFormApp
     {
         public static void Start()
         {
-            var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.json");
+            // var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.json");
+            var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.Original.json");
             var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(content);
-
         }
 
         #region ===========  Json SubClasses  ===========
@@ -43,6 +39,7 @@ namespace TestFormApp
             public DateTime delisted_utc;
 
             // public string pSymbol => PolygonCommon.GetMyTicker(ticker);
+            // public string Ticker => ticker;
             public string pSymbol => ticker;
             public DateTime pDate;
             public string pName => string.IsNullOrEmpty(name) ? null : name;
