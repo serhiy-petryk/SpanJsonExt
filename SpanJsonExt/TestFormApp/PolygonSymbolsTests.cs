@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TestFormApp
 {
-    class Tests
+    class PolygonSymbolsTests
     {
         public static void Start()
         {
@@ -39,7 +39,12 @@ namespace TestFormApp
             public DateTime delisted_utc;
 
             // public string pSymbol => PolygonCommon.GetMyTicker(ticker);
-            // public string Ticker => ticker;
+            public string Ticker
+            {
+                get { return ticker; }
+                set { ticker = value; }
+            }
+
             public string pSymbol => ticker;
             public DateTime pDate;
             public string pName => string.IsNullOrEmpty(name) ? null : name;
