@@ -15,8 +15,8 @@ namespace TestFormApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Data.Actions.Polygon.PolygonMinuteScan.Start();
-            PolygonDayTests.Start();
+            Data.Actions.Polygon.PolygonMinuteScan.Start();
+            // PolygonDayTests.Start();
             // PolygonSymbolsTests.Start();
 
             Application.Run(new Form1());

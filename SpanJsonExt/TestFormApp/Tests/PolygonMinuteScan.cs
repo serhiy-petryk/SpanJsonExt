@@ -74,7 +74,7 @@ namespace Data.Actions.Polygon
 
             Debug.Print($"Finished!!! {sw.Elapsed.TotalSeconds:N0} seconds. Items: {itemCount:N0}. Bytes: {byteCount:N0}");
             Logger.AddMessage($"Finished!!! {sw.Elapsed.TotalSeconds:N0} seconds. Items: {itemCount:N0}. Bytes: {byteCount:N0}");
-            // 181
+            // 181/68-Release
         }
 
         public static IEnumerable<(string, List<(DateTime, PolygonCommon.cMinuteItem[])>)> GetData()
@@ -114,7 +114,7 @@ namespace Data.Actions.Polygon
             List<DateTime> lastDates = null;
             ZipArchive zip = null;
 
-            var DbConnectionString = "Data Source=localhost;Initial Catalog=dbQuote2022;Integrated Security=True;Connect Timeout=150;Encrypt=false";
+            var DbConnectionString = "Data Source=localhost;Initial Catalog=dbQ2024Minute;Integrated Security=True;Connect Timeout=150;Encrypt=false";
             using (var conn = new SqlConnection(DbConnectionString))
             using (var cmd = conn.CreateCommand())
             {
