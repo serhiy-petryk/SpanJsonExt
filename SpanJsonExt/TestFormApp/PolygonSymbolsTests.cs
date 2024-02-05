@@ -7,8 +7,10 @@ namespace TestFormApp
     {
         public static void Start()
         {
-            // var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.json");
+            var content1 = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.json");
             var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.Original.json");
+            var bytes = System.Text.Encoding.UTF8.GetBytes(content);
+            // var oo1 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(bytes);
             var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(content);
         }
 
@@ -39,7 +41,7 @@ namespace TestFormApp
             public DateTime delisted_utc;
 
             // public string pSymbol => PolygonCommon.GetMyTicker(ticker);
-            public string Ticker
+            /*public string Ticker
             {
                 get { return ticker; }
                 set { ticker = value; }
@@ -50,7 +52,7 @@ namespace TestFormApp
             public string pName => string.IsNullOrEmpty(name) ? null : name;
             public string pExchange => string.IsNullOrEmpty(primary_exchange) ? "No" : primary_exchange;
 
-            public DateTime pTimeStamp;
+            public DateTime pTimeStamp;*/
         }
         #endregion
 
