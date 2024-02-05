@@ -353,7 +353,8 @@ namespace SpanJson.Formatters
                     var formatter = resolver.GetFormatter(memberInfo);
                     var formatterType = formatter.GetType();
                     var fieldInfo = formatterType.GetField("Default", BindingFlags.Static | BindingFlags.Public);
-                    return Expression.Assign(Expression.PropertyOrField(returnValue, memberInfo.MemberName),
+                    // changed by SP
+                    return Expression.Assign(ChangedBySP.Changes.GetMemberExpressionForPropertyOrField(returnValue, memberInfo.MemberName),
                         Expression.Call(Expression.Field(null, fieldInfo),
                             FindPublicInstanceMethod(formatterType, "Deserialize", readerParameter.Type.MakeByRefType()),
                             readerParameter));

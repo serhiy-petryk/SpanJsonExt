@@ -1,17 +1,41 @@
 ﻿using System;
 using System.IO;
+using SpanJson.Resolvers;
 
 namespace TestFormApp
 {
     class PolygonSymbolsTests
     {
+        /*public sealed class CustomResolver<TSymbol> : ResolverBase<TSymbol, CustomResolver<TSymbol>> where TSymbol : struct
+        {
+            public CustomResolver() : base(new SpanJsonOptions
+            {
+                NullOption = NullOptions.ExcludeNulls,
+                NamingConvention = NamingConventions.CamelCase,
+                EnumOption = EnumOptions.Integer,
+                ByteArrayOptions = ByteArrayOptions.Base64
+            })
+            {
+            }
+        }*/
         public static void Start()
         {
+/*            return Expression.Assign(Expression.PropertyOrField(returnValue, memberInfo.MemberName),
+                Expression.Call(Expression.Field(null, fieldInfo),
+                    FindPublicInstanceMethod(formatterType, "Deserialize", readerParameter.Type.MakeByRefType()),
+                    readerParameter));*/
+
+            // var fi = typeof(cRoot).GetField("count");
+
+            var a1 = new SpanJsonOptions()
+                {NamingConvention = NamingConventions.CamelCase};
+
             var content1 = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.json");
             var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.Original.json");
             var bytes = System.Text.Encoding.UTF8.GetBytes(content);
-            // var oo1 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(bytes);
-            var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(content);
+            var oo2 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(bytes);
+            var oo1 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot, ExcludeNullsCamelCaseResolver<byte>>(bytes);
+            // var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(content);
         }
 
         #region ===========  Json SubClasses  ===========
@@ -19,10 +43,13 @@ namespace TestFormApp
         private class cRoot
         {
             public int count;
-            public string next_url;
+            private int privateField;
+            private int privateProperty { get; set; }
+            public int Count { get; set; } //=> count;
+            public string Next_url;
             public string request_id;
-            public cItem[] results;
-            public string status;
+            public cItem[] Results;
+            public string Status;
         }
         private class cItem
         {

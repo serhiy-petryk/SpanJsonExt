@@ -185,6 +185,9 @@ namespace SpanJson.Resolvers
                     canRead = propertyInfo.CanRead;
                     canWrite = propertyInfo.CanWrite;
                 }
+                // changed by sp
+                else if (memberInfo is FieldInfo fieldInfo)
+                    canWrite = !fieldInfo.IsInitOnly;
 
                 if (memberInfo.GetCustomAttribute<JsonExtensionDataAttribute>() != null && typeof(IDictionary<string, object>).IsAssignableFrom(memberType) && canRead && canWrite)
                 {
