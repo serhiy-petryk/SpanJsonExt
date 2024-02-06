@@ -10,7 +10,7 @@ namespace SpanJson
         private readonly ReadOnlySpan<char> _chars;
         private readonly ReadOnlySpan<byte> _bytes;
         private readonly int _length;
-        // changed by SP
+        // changed by SP: added field
         private readonly bool _allowUnquotedStrings;
 
         private int _pos;
@@ -18,7 +18,7 @@ namespace SpanJson
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public JsonReader(in ReadOnlySpan<TSymbol> input, SpanJsonOptions options = null)
         {
-            // changed by SP
+            // changed by SP: added line
             _allowUnquotedStrings = options?.AllowUnquotedStrings ?? false;
             _length = input.Length;
             _pos = 0;
