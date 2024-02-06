@@ -25,7 +25,7 @@ namespace TestFormApp
 
         private class cItem
         {
-            public string TT;
+            public string T;
             public float v;
             public float vw;
             public float o;
@@ -35,7 +35,7 @@ namespace TestFormApp
             public long t;
             public int n;
 
-            public string Symbol => TT;
+            public string Symbol => T;
             public DateTime Date => DateTime.Today; // CsUtils.GetEstDateTimeFromUnixMilliseconds(t);
             public float Open => o;
             public float High => h;

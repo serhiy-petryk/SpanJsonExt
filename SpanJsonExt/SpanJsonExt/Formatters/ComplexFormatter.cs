@@ -63,7 +63,10 @@ namespace SpanJson.Formatters
                 var formatterType = resolver.GetFormatter(memberInfo).GetType();
                 Expression serializerInstance = null;
                 MethodInfo serializeMethodInfo;
+                Expression memberExpression = ChangedBySP.Changes.GetMemberExpressionForPropertyOrField(valueParameter, memberInfo.MemberName);
+                /* Original code
                 Expression memberExpression = Expression.PropertyOrField(valueParameter, memberInfo.MemberName);
+                */
                 var parameterExpressions = new List<Expression> {writerParameter, memberExpression};
                 var fieldInfo = formatterType.GetField("Default", BindingFlags.Static | BindingFlags.Public);
                 if (IsNoRuntimeDecisionRequired(memberInfo.MemberType))
@@ -153,8 +156,13 @@ namespace SpanJson.Formatters
                     if (memberInfo.MemberType.IsClass)
                     {
                         testNullExpression = Expression.ReferenceNotEqual(
+                            ChangedBySP.Changes.GetMemberExpressionForPropertyOrField(valueParameter, memberInfo.MemberName),
+                            Expression.Constant(null));
+                        /* Original code
+                        testNullExpression = Expression.ReferenceNotEqual(
                             Expression.PropertyOrField(valueParameter, memberInfo.MemberName),
                             Expression.Constant(null));
+                        */
                     }
                     else if (memberInfo.MemberType.IsValueType && Nullable.GetUnderlyingType(memberInfo.MemberType) != null) // nullable value type
                     {
