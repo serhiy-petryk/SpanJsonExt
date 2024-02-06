@@ -74,7 +74,7 @@ namespace Data.Actions.Polygon
 
             Debug.Print($"Finished!!! {sw.Elapsed.TotalSeconds:N0} seconds. Items: {itemCount:N0}. Bytes: {byteCount:N0}");
             Logger.AddMessage($"Finished!!! {sw.Elapsed.TotalSeconds:N0} seconds. Items: {itemCount:N0}. Bytes: {byteCount:N0}");
-            // 181/68-Release
+            // 181 secs (Debug)/68 secs (Release); After my changes: 70 secs (Release)
         }
 
         public static IEnumerable<(string, List<(DateTime, PolygonCommon.cMinuteItem[])>)> GetData()

@@ -35,12 +35,12 @@ namespace TestFormApp
             // StreamTests.TestZipStream();*/
 
 
-            // Data.Actions.Polygon.PolygonMinuteScan.Start();
+            Data.Actions.Polygon.PolygonMinuteScan.Start();
             // PolygonDayTests.Start();
             // PolygonSymbolsTests.Start();
 
-            UnquotedName.Tests.StartUtf8();
-            UnquotedName.Tests.StartUtf16();
+            // UnquotedName.Tests.StartUtf8();
+            // UnquotedName.Tests.StartUtf16();
 
             Application.Run(new Form1());
         }
