@@ -564,12 +564,21 @@ namespace SpanJson
             {
                 ref var c = ref MemoryMarshal.GetReference(_chars);
                 ref var stringStart = ref Unsafe.Add(ref c, pos++);
+                var stringLength = 0;
                 if (stringStart != JsonUtf16Constant.String)
                 {
-                    ThrowJsonParserException(JsonParserException.ParserError.ExpectedDoubleQuote);
+                    // changed by SP
+                    if ((stringStart < 'A' || stringStart>'z') && TryFindEndOfUtf16UnquotedString(ref stringStart, _length - pos, ref stringLength))
+                    {
+                        escapedCharsSize = 0;
+                        var result = MemoryMarshal.CreateReadOnlySpan(ref Unsafe.Add(ref stringStart, 0), stringLength);
+                        pos += stringLength - 1;
+                        return result;
+                    }
+
+                    ThrowJsonParserException(JsonParserException.ParserError.ExpectedSeparator);
                 }
 
-                var stringLength = 0;
                 // We should also get info about how many escaped chars exist from here
                 if (TryFindEndOfUtf16String(ref stringStart, _length - pos, ref stringLength, out escapedCharsSize))
                 {
@@ -995,6 +1004,22 @@ namespace SpanJson
                 {
                     return true;
                 }
+            }
+
+            return false;
+        }
+
+        // change by SP: added
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool TryFindEndOfUtf16UnquotedString(ref char cStart, int length, ref int stringLength)
+        {
+            while (stringLength < length)
+            {
+                ref var c = ref Unsafe.Add(ref cStart, ++stringLength);
+                if (c == JsonUtf16Constant.NameSeparator)
+                    return true;
+                else if (c < '0' || c > 'z' || (c >= '9' && c <= 'A')) // not letter or digit
+                    return false;
             }
 
             return false;
