@@ -39,7 +39,8 @@ namespace TestFormApp
             // PolygonDayTests.Start();
             // PolygonSymbolsTests.Start();
 
-            UnquotedName.Tests.Start();
+            UnquotedName.Tests.StartUtf8();
+            UnquotedName.Tests.StartUtf16();
 
             Application.Run(new Form1());
         }

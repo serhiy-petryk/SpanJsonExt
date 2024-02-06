@@ -16,14 +16,26 @@ namespace TestFormApp.UnquotedName
         private static string liveContent = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\PropertiesWithoutQuotes.json");
 
 
-        public static void Start()
+        public static void StartUtf16()
         {
             // var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(Json2);
             var content1 = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.Original.json");
             var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.json");
             var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRootSymbols>(content);
             var oo2 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(liveContent);
-            var oo3 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(liveContent, 2345);
+            var oo3 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(liveContent);
+        }
+
+        public static void StartUtf8()
+        {
+            // var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(Json2);
+            var content1 = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.Original.json");
+            var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.json");
+            var oo = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRootSymbols>(ToBytes(content));
+            var oo2 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(ToBytes(liveContent));
+            var oo3 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(ToBytes(liveContent));
+
+            byte[] ToBytes(string s) => System.Text.Encoding.UTF8.GetBytes(s);
         }
 
 
