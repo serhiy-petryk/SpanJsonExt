@@ -17,15 +17,7 @@ namespace SpanJson
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public JsonReader(in ReadOnlySpan<TSymbol> input, SpanJsonOptions options = null)
         {
-            if (options != null)
-            {
-                _allowUnquotedStrings = options.AllowUnquotedStrings;
-            }
-            else
-            {
-                _allowUnquotedStrings = false;
-            }
-
+            _allowUnquotedStrings = options?.AllowUnquotedStrings ?? false;
             _length = input.Length;
             _pos = 0;
 
