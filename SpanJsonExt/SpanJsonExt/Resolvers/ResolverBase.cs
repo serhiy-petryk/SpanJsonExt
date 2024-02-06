@@ -185,7 +185,7 @@ namespace SpanJson.Resolvers
                     canRead = propertyInfo.CanRead;
                     canWrite = propertyInfo.CanWrite;
                 }
-                // changed by sp
+                // changed by sp: added
                 else if (memberInfo is FieldInfo fieldInfo)
                     canWrite = !fieldInfo.IsInitOnly;
 

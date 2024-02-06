@@ -358,6 +358,12 @@ namespace SpanJson.Formatters
                         Expression.Call(Expression.Field(null, fieldInfo),
                             FindPublicInstanceMethod(formatterType, "Deserialize", readerParameter.Type.MakeByRefType()),
                             readerParameter));
+                    /* Old code
+                    return Expression.Assign(Expression.PropertyOrField(returnValue, memberInfo.MemberName),
+                        Expression.Call(Expression.Field(null, fieldInfo),
+                            FindPublicInstanceMethod(formatterType, "Deserialize", readerParameter.Type.MakeByRefType()),
+                            readerParameter));
+                     */
                 };
             }
 

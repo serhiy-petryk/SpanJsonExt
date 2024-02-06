@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace SpanJson.ChangedBySP
 {
-    // changed by SP
+    // changed by SP: added
     public static class Changes
     {
         public static MemberExpression GetMemberExpressionForPropertyOrField(Expression expression, string propertyOrFieldName)
