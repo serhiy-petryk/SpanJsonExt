@@ -40,7 +40,7 @@ namespace TestFormApp
             // PolygonSymbolsTests.Start();
 
             UnquotedName.Tests.StartUtf8();
-            // UnquotedName.Tests.StartUtf16();
+            UnquotedName.Tests.StartUtf16();
 
             Application.Run(new Form1());
         }

@@ -661,7 +661,8 @@ namespace SpanJson
                 if (stringStart != JsonUtf8Constant.String)
                 {
                     // changed by SP
-                    if ((stringStart >= 0x41 && stringStart <= 0x7a) && TryFindEndOfUtf8UnquotedString(ref stringStart, _length - pos, ref stringLength))
+                    if (_allowUnquotedStrings && (stringStart >= 0x41 && stringStart <= 0x7a) &&
+                        TryFindEndOfUtf8UnquotedString(ref stringStart, _length - pos, ref stringLength))
                     {
                         escapedCharsSize = 0;
                         var result = MemoryMarshal.CreateReadOnlySpan(ref Unsafe.Add(ref stringStart, 0), stringLength);

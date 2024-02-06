@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using SpanJson.Resolvers;
 
 namespace SpanJson
 {
@@ -9,12 +10,22 @@ namespace SpanJson
         private readonly ReadOnlySpan<char> _chars;
         private readonly ReadOnlySpan<byte> _bytes;
         private readonly int _length;
+        private readonly bool _allowUnquotedStrings;
 
         private int _pos;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public JsonReader(in ReadOnlySpan<TSymbol> input)
+        public JsonReader(in ReadOnlySpan<TSymbol> input, SpanJsonOptions options = null)
         {
+            if (options != null)
+            {
+                _allowUnquotedStrings = options.AllowUnquotedStrings;
+            }
+            else
+            {
+                _allowUnquotedStrings = false;
+            }
+
             _length = input.Length;
             _pos = 0;
 

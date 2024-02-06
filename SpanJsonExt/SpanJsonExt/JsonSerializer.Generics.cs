@@ -148,10 +148,10 @@ namespace SpanJson
                 }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                public static T InnerDeserialize(in ReadOnlySpan<TSymbol> input)
+                public static T InnerDeserialize(in ReadOnlySpan<TSymbol> input, SpanJsonOptions options = null)
                 {
                     _lastDeserializationSizeEstimate = input.Length;
-                    var jsonReader = new JsonReader<TSymbol>(input);
+                    var jsonReader = new JsonReader<TSymbol>(input, options);
                     return Formatter.Deserialize(ref jsonReader);
                 }
 
@@ -495,9 +495,9 @@ namespace SpanJson
                 /// <typeparam name="T">Type</typeparam>
                 /// <param name="input">Input</param>
                 /// <returns>Deserialized object</returns>
-                public static T Deserialize<T>(byte[] input)
+                public static T Deserialize<T>(byte[] input, SpanJsonOptions options = null)
                 {
-                    return Deserialize<T, ExcludeNullsOriginalCaseResolver<byte>>(input);
+                    return Deserialize<T, ExcludeNullsOriginalCaseResolver<byte>>(input, options);
                 }
 
                 /// <summary>
@@ -507,10 +507,10 @@ namespace SpanJson
                 /// <typeparam name="TResolver">Resolver</typeparam>
                 /// <param name="input">Input</param>
                 /// <returns>Deserialized object</returns>
-                public static T Deserialize<T, TResolver>(byte[] input)
+                public static T Deserialize<T, TResolver>(byte[] input, SpanJsonOptions options)
                     where TResolver : IJsonFormatterResolver<byte, TResolver>, new()
                 {
-                    return Inner<T, byte, TResolver>.InnerDeserialize(input);
+                    return Inner<T, byte, TResolver>.InnerDeserialize(input, options);
                 }
 
                 /// <summary>

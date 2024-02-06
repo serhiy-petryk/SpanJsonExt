@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SpanJson;
+using SpanJson.Resolvers;
 
 namespace TestFormApp.UnquotedName
 {
@@ -13,7 +14,8 @@ namespace TestFormApp.UnquotedName
     {
         private const string Json1 = "{\"type\":\"xxxx\",\"data\":{\"action\":\"all\",\"number\":123}}";
         private const string Json2 = "{\"type\":\"xxxx\",\"data\":{action:\"all\",\"number\":123}}";
-        private static string liveContent = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\PropertiesWithoutQuotes.json");
+        private static readonly string LiveContent = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\PropertiesWithoutQuotes.json");
+        private static readonly SpanJsonOptions Options = new SpanJsonOptions() { AllowUnquotedStrings = true };
 
 
         public static void StartUtf16()
@@ -22,8 +24,8 @@ namespace TestFormApp.UnquotedName
             var content1 = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.Original.json");
             var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.json");
             var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRootSymbols>(content);
-            var oo2 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(liveContent);
-            var oo3 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(liveContent);
+            var oo2 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(LiveContent);
+            var oo3 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(LiveContent);
         }
 
         public static void StartUtf8()
@@ -31,9 +33,9 @@ namespace TestFormApp.UnquotedName
             // var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(Json2);
             var content1 = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.Original.json");
             var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.json");
-            var oo = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRootSymbols>(ToBytes(content));
-            var oo2 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(ToBytes(liveContent));
-            var oo3 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(ToBytes(liveContent));
+            var oo = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRootSymbols>(ToBytes(content), Options);
+            var oo2 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(ToBytes(LiveContent), Options);
+            var oo3 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(ToBytes(LiveContent), Options);
 
             byte[] ToBytes(string s) => System.Text.Encoding.UTF8.GetBytes(s);
         }
