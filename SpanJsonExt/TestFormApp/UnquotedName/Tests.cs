@@ -62,12 +62,12 @@ namespace TestFormApp.UnquotedName
             public string other;
             public string text;
 
-            public DateTime pDate => DateTime.Parse(date, CultureInfo.InvariantCulture);
-            public string pSymbol => symbol.StartsWith("$") ? symbol.Substring(1) : symbol;
-            public string pOther => other == "N/A" || string.IsNullOrEmpty(other) ? null : other;
-            public string pName => string.IsNullOrEmpty(name) ? null : name;
+            public DateTime Date => DateTime.Parse(date, CultureInfo.InvariantCulture);
+            public string Symbol => symbol.StartsWith("$") ? symbol.Substring(1) : symbol;
+            public string Other => other == "N/A" || string.IsNullOrEmpty(other) ? null : other;
+            public string Name => string.IsNullOrEmpty(name) ? null : name;
 
-            public override string ToString() => $"{pDate:yyyy-MM-dd}, {pSymbol}, {type}, {pOther}, {text}";
+            public override string ToString() => $"{Date:yyyy-MM-dd}, {Symbol}, {type}, {Other}, {text}";
         }
         #endregion
 
