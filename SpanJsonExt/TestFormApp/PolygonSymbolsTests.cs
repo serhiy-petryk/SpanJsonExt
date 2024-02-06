@@ -30,11 +30,11 @@ namespace TestFormApp
             var a1 = new SpanJsonOptions()
                 {NamingConvention = NamingConventions.CamelCase};
 
-            var content1 = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.json");
-            var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.Original.json");
+            var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.json");
+            var content1 = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.Original.json");
             var bytes = System.Text.Encoding.UTF8.GetBytes(content);
-            var oo2 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(bytes);
-            var oo1 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot, ExcludeNullsCamelCaseResolver<byte>>(bytes);
+            var oo2 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(content);
+            // var oo1 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot, ExcludeNullsCamelCaseResolver<byte>>(bytes);
             // var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(content);
         }
 

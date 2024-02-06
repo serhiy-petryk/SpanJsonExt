@@ -36,8 +36,10 @@ namespace TestFormApp
 
 
             // Data.Actions.Polygon.PolygonMinuteScan.Start();
-            PolygonDayTests.Start();
+            // PolygonDayTests.Start();
             // PolygonSymbolsTests.Start();
+
+            UnquotedName.Tests.Start();
 
             Application.Run(new Form1());
         }
