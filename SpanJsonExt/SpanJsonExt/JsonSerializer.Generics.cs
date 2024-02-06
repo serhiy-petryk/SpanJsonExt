@@ -156,24 +156,24 @@ namespace SpanJson
                 }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                public static ValueTask<T> InnerDeserializeAsync(TextReader reader, CancellationToken cancellationToken = default)
+                public static ValueTask<T> InnerDeserializeAsync(TextReader reader, SpanJsonOptions options = null, CancellationToken cancellationToken = default)
                 {
                     var input = reader.ReadToEndAsync();
                     if (input.IsCompletedSuccessfully)
                     {
-                        return new ValueTask<T>(InnerDeserialize(MemoryMarshal.Cast<char, TSymbol>(input.Result)));
+                        return new ValueTask<T>(InnerDeserialize(MemoryMarshal.Cast<char, TSymbol>(input.Result), options));
                     }
 
                     return AwaitDeserializeAsync(input);
                 }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                public static ValueTask<T> InnerDeserializeAsync(Stream stream, CancellationToken cancellationToken = default)
+                public static ValueTask<T> InnerDeserializeAsync(Stream stream, SpanJsonOptions options = null, CancellationToken cancellationToken = default)
                 {
                     if (stream is MemoryStream ms && ms.TryGetBuffer(out var buffer))
                     {
                         var span = new ReadOnlySpan<byte>(buffer.Array, buffer.Offset, buffer.Count);
-                        return new ValueTask<T>(InnerDeserialize(MemoryMarshal.Cast<byte, TSymbol>(span)));
+                        return new ValueTask<T>(InnerDeserialize(MemoryMarshal.Cast<byte, TSymbol>(span), options));
                     }
 
                     var input = stream.CanSeek
@@ -397,11 +397,23 @@ namespace SpanJson
                 /// </summary>
                 /// <typeparam name="T">Type</typeparam>
                 /// <param name="reader">TextReader</param>
+                /// <param name="options">Options</param>
                 /// <param name="cancellationToken">CancellationToken</param>
                 /// <returns>Deserialized object</returns>
-                public static ValueTask<T> DeserializeAsync<T>(TextReader reader, CancellationToken cancellationToken = default)
+                public static ValueTask<T> DeserializeAsync<T>(TextReader reader, SpanJsonOptions options = null, CancellationToken cancellationToken = default)
                 {
-                    return DeserializeAsync<T, ExcludeNullsOriginalCaseResolver<char>>(reader, cancellationToken);
+                    options = options ?? new SpanJsonOptions();
+
+                    if (options.NullOption == NullOptions.ExcludeNulls && options.NamingConvention == NamingConventions.OriginalCase)
+                        return Inner<T, char, ExcludeNullsOriginalCaseResolver<char>>.InnerDeserializeAsync(reader, options);
+                    else if (options.NullOption == NullOptions.ExcludeNulls && options.NamingConvention == NamingConventions.CamelCase)
+                        return Inner<T, char, ExcludeNullsCamelCaseResolver<char>>.InnerDeserializeAsync(reader, options);
+                    else if (options.NullOption == NullOptions.IncludeNulls && options.NamingConvention == NamingConventions.OriginalCase)
+                        return Inner<T, char, IncludeNullsOriginalCaseResolver<char>>.InnerDeserializeAsync(reader, options);
+                    else if (options.NullOption == NullOptions.IncludeNulls && options.NamingConvention == NamingConventions.CamelCase)
+                        return Inner<T, char, IncludeNullsCamelCaseResolver<char>>.InnerDeserializeAsync(reader, options);
+                    else
+                        throw new NotSupportedException();
                 }
 
                 /// <summary>
@@ -430,7 +442,7 @@ namespace SpanJson
                 public static ValueTask<T> DeserializeAsync<T, TResolver>(TextReader reader, CancellationToken cancellationToken = default)
                     where TResolver : IJsonFormatterResolver<char, TResolver>, new()
                 {
-                    return Inner<T, char, TResolver>.InnerDeserializeAsync(reader, cancellationToken);
+                    return Inner<T, char, TResolver>.InnerDeserializeAsync(reader, null, cancellationToken);
                 }
             }
 
@@ -553,11 +565,23 @@ namespace SpanJson
                 /// </summary>
                 /// <typeparam name="T">Type</typeparam>
                 /// <param name="stream">Stream</param>
+                /// <param name="options">Options</param>
                 /// <param name="cancellationToken">CancellationToken</param>
                 /// <returns>Task</returns>
-                public static ValueTask<T> DeserializeAsync<T>(Stream stream, CancellationToken cancellationToken = default)
+                public static ValueTask<T> DeserializeAsync<T>(Stream stream, SpanJsonOptions options = null, CancellationToken cancellationToken = default)
                 {
-                    return DeserializeAsync<T, ExcludeNullsOriginalCaseResolver<byte>>(stream, cancellationToken);
+                    options = options ?? new SpanJsonOptions();
+
+                    if (options.NullOption == NullOptions.ExcludeNulls && options.NamingConvention == NamingConventions.OriginalCase)
+                        return Inner<T, byte, ExcludeNullsOriginalCaseResolver<byte>>.InnerDeserializeAsync(stream, options, cancellationToken);
+                    else if (options.NullOption == NullOptions.ExcludeNulls && options.NamingConvention == NamingConventions.CamelCase)
+                        return Inner<T, byte, ExcludeNullsCamelCaseResolver<byte>>.InnerDeserializeAsync(stream, options, cancellationToken);
+                    else if (options.NullOption == NullOptions.IncludeNulls && options.NamingConvention == NamingConventions.OriginalCase)
+                        return Inner<T, byte, IncludeNullsOriginalCaseResolver<byte>>.InnerDeserializeAsync(stream, options, cancellationToken);
+                    else if (options.NullOption == NullOptions.IncludeNulls && options.NamingConvention == NamingConventions.CamelCase)
+                        return Inner<T, byte, IncludeNullsCamelCaseResolver<byte>>.InnerDeserializeAsync(stream, options, cancellationToken);
+                    else
+                        throw new NotSupportedException();
                 }
 
                 /// <summary>
@@ -586,7 +610,7 @@ namespace SpanJson
                 public static ValueTask<T> DeserializeAsync<T, TResolver>(Stream stream, CancellationToken cancellationToken = default)
                     where TResolver : IJsonFormatterResolver<byte, TResolver>, new()
                 {
-                    return Inner<T, byte, TResolver>.InnerDeserializeAsync(stream, cancellationToken);
+                    return Inner<T, byte, TResolver>.InnerDeserializeAsync(stream, null, cancellationToken);
                 }
             }
         }
