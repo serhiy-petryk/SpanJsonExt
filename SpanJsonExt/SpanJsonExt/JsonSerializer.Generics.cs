@@ -467,23 +467,22 @@ namespace SpanJson
                 /// </summary>
                 /// <typeparam name="T">Type</typeparam>
                 /// <param name="input">Input</param>
+                /// <param name="options">Options</param>
                 /// <returns>Deserialized object</returns>
-                public static T Deserialize<T>(in ReadOnlySpan<byte> input)
+                public static T Deserialize<T>(in ReadOnlySpan<byte> input, SpanJsonOptions options)
                 {
-                    return Deserialize<T, ExcludeNullsOriginalCaseResolver<byte>>(input);
-                }
+                    options = options ?? new SpanJsonOptions();
 
-                /// <summary>
-                ///     Deserialize from byte array with specific resolver.
-                /// </summary>
-                /// <typeparam name="T">Type</typeparam>
-                /// <typeparam name="TResolver">Resolver</typeparam>
-                /// <param name="input">Input</param>
-                /// <returns>Deserialized object</returns>
-                public static T Deserialize<T, TResolver>(in ReadOnlySpan<byte> input)
-                    where TResolver : IJsonFormatterResolver<byte, TResolver>, new()
-                {
-                    return Inner<T, byte, TResolver>.InnerDeserialize(input);
+                    if (options.NullOption == NullOptions.ExcludeNulls && options.NamingConvention == NamingConventions.OriginalCase)
+                        return Inner<T, byte, ExcludeNullsOriginalCaseResolver<byte>>.InnerDeserialize(input, options);
+                    else if (options.NullOption == NullOptions.ExcludeNulls && options.NamingConvention == NamingConventions.CamelCase)
+                        return Inner<T, byte, ExcludeNullsCamelCaseResolver<byte>>.InnerDeserialize(input, options);
+                    else if (options.NullOption == NullOptions.IncludeNulls && options.NamingConvention == NamingConventions.OriginalCase)
+                        return Inner<T, byte, IncludeNullsOriginalCaseResolver<byte>>.InnerDeserialize(input, options);
+                    else if (options.NullOption == NullOptions.IncludeNulls && options.NamingConvention == NamingConventions.CamelCase)
+                        return Inner<T, byte, IncludeNullsCamelCaseResolver<byte>>.InnerDeserialize(input, options);
+                    else
+                        throw new NotSupportedException();
                 }
 
                 /// <summary>
@@ -495,20 +494,18 @@ namespace SpanJson
                 /// <returns>Deserialized object</returns>
                 public static T Deserialize<T>(byte[] input, SpanJsonOptions options = null)
                 {
-                    return Deserialize<T, ExcludeNullsOriginalCaseResolver<byte>>(input, options);
-                }
+                    options = options ?? new SpanJsonOptions();
 
-                /// <summary>
-                ///     Deserialize from byte array with specific resolver.
-                /// </summary>
-                /// <typeparam name="T">Type</typeparam>
-                /// <typeparam name="TResolver">Resolver</typeparam>
-                /// <param name="input">Input</param>
-                /// <returns>Deserialized object</returns>
-                public static T Deserialize<T, TResolver>(byte[] input, SpanJsonOptions options)
-                    where TResolver : IJsonFormatterResolver<byte, TResolver>, new()
-                {
-                    return Inner<T, byte, TResolver>.InnerDeserialize(input, options);
+                    if (options.NullOption == NullOptions.ExcludeNulls && options.NamingConvention == NamingConventions.OriginalCase)
+                        return Inner<T, byte, ExcludeNullsOriginalCaseResolver<byte>>.InnerDeserialize(input, options);
+                    else if (options.NullOption == NullOptions.ExcludeNulls && options.NamingConvention == NamingConventions.CamelCase)
+                        return Inner<T, byte, ExcludeNullsCamelCaseResolver<byte>>.InnerDeserialize(input, options);
+                    else if (options.NullOption == NullOptions.IncludeNulls && options.NamingConvention == NamingConventions.OriginalCase)
+                        return Inner<T, byte, IncludeNullsOriginalCaseResolver<byte>>.InnerDeserialize(input, options);
+                    else if (options.NullOption == NullOptions.IncludeNulls && options.NamingConvention == NamingConventions.CamelCase)
+                        return Inner<T, byte, IncludeNullsCamelCaseResolver<byte>>.InnerDeserialize(input, options);
+                    else
+                        throw new NotSupportedException();
                 }
 
                 /// <summary>
