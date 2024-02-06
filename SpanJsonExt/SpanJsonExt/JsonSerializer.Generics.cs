@@ -378,10 +378,10 @@ namespace SpanJson
                 /// <typeparam name="TResolver">Resolver</typeparam>
                 /// <param name="input">Input</param>
                 /// <returns>Deserialized object</returns>
-                public static T Deserialize<T, TResolver>(string input)
+                public static T Deserialize<T, TResolver>(string input, SpanJsonOptions options)
                     where TResolver : IJsonFormatterResolver<char, TResolver>, new()
                 {
-                    return Inner<T, char, TResolver>.InnerDeserialize(input);
+                    return Inner<T, char, TResolver>.InnerDeserialize(input, options);
                 }
 
                 /// <summary>
@@ -390,9 +390,9 @@ namespace SpanJson
                 /// <typeparam name="T">Type</typeparam>
                 /// <param name="input">Input</param>
                 /// <returns>Deserialized object</returns>
-                public static T Deserialize<T>(string input)
+                public static T Deserialize<T>(string input, SpanJsonOptions options = null)
                 {
-                    return Deserialize<T, ExcludeNullsOriginalCaseResolver<char>>(input);
+                    return Deserialize<T, ExcludeNullsOriginalCaseResolver<char>>(input, options);
                 }
 
                 /// <summary>
