@@ -150,6 +150,8 @@ namespace SpanJson
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 public static T InnerDeserialize(in ReadOnlySpan<TSymbol> input, SpanJsonOptions options = null)
                 {
+                    options = options ?? new SpanJsonOptions();
+                    
                     _lastDeserializationSizeEstimate = input.Length;
                     var jsonReader = new JsonReader<TSymbol>(input, options);
                     return Formatter.Deserialize(ref jsonReader);
@@ -158,6 +160,8 @@ namespace SpanJson
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 public static ValueTask<T> InnerDeserializeAsync(TextReader reader, SpanJsonOptions options = null, CancellationToken cancellationToken = default)
                 {
+                    options = options ?? new SpanJsonOptions();
+
                     var input = reader.ReadToEndAsync();
                     if (input.IsCompletedSuccessfully)
                     {
@@ -170,6 +174,8 @@ namespace SpanJson
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 public static ValueTask<T> InnerDeserializeAsync(Stream stream, SpanJsonOptions options = null, CancellationToken cancellationToken = default)
                 {
+                    options = options ?? new SpanJsonOptions();
+
                     if (stream is MemoryStream ms && ms.TryGetBuffer(out var buffer))
                     {
                         var span = new ReadOnlySpan<byte>(buffer.Array, buffer.Offset, buffer.Count);
