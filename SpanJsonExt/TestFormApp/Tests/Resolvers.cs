@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Design;
+using SpanJson;
 using SpanJson.Resolvers;
 
 namespace TestFormApp.Tests
@@ -28,6 +29,10 @@ namespace TestFormApp.Tests
         }
         public static void Start()
         {
+            var oo2 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<UnquotedName.Tests.cRoot, CustomResolver<char>>(LiveContent);
+            var oo21 = SpanJson.JsonSerializer.NonGeneric.Utf16.Serialize(oo2.data.data);
+            var pretty21 = JsonSerializer.PrettyPrinter.Print(oo21);
+            var minified21 = JsonSerializer.Minifier.Minify(oo21);
             var oo3 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<UnquotedName.Tests.cRoot, CustomResolver<byte>>(ToBytes(LiveContent));
 
             byte[] ToBytes(string s) => System.Text.Encoding.UTF8.GetBytes(s);
