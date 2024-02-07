@@ -64,8 +64,7 @@ namespace SpanJson.Formatters
                 MethodInfo serializeMethodInfo;
                 Expression memberExpression = ChangedBySP.Changes.GetMemberExpressionForPropertyOrField(valueParameter, memberInfo.MemberName);
                 /* Original code
-                Expression memberExpression = Expression.PropertyOrField(valueParameter, memberInfo.MemberName);
-                */
+                Expression memberExpression = Expression.PropertyOrField(valueParameter, memberInfo.MemberName); */
                 var parameterExpressions = new List<Expression> {writerParameter, memberExpression};
                 var fieldInfo = formatterType.GetField("Default", BindingFlags.Static | BindingFlags.Public);
                 if (IsNoRuntimeDecisionRequired(memberInfo.MemberType))
@@ -160,12 +159,11 @@ namespace SpanJson.Formatters
                         /* Original code
                         testNullExpression = Expression.ReferenceNotEqual(
                             Expression.PropertyOrField(valueParameter, memberInfo.MemberName),
-                            Expression.Constant(null));
-                        */
+                            Expression.Constant(null)); */
                     }
                     else if (memberInfo.MemberType.IsValueType && Nullable.GetUnderlyingType(memberInfo.MemberType) != null) // nullable value type
                     {
-                        testNullExpression = Expression.IsTrue(
+                         testNullExpression = Expression.IsTrue(
                             Expression.Property(Expression.PropertyOrField(valueParameter, memberInfo.MemberName), "HasValue"));
                     }
                 }
@@ -207,8 +205,11 @@ namespace SpanJson.Formatters
                 var knownNames = objectDescription.Members.Where(t => t.CanWrite).Select(a => a.Name).ToHashSet();
                 var memberInfo = typeof(ComplexFormatter).GetMethod(nameof(SerializeExtension), BindingFlags.Static | BindingFlags.NonPublic);
                 var closedMemberInfo = memberInfo.MakeGenericMethod(typeof(TSymbol), typeof(TResolver));
-                var valueExpression = Expression.TypeAs(Expression.PropertyOrField(valueParameter, objectDescription.ExtensionMemberInfo.MemberName),
+                var valueExpression = Expression.TypeAs(ChangedBySP.Changes.GetMemberExpressionForPropertyOrField(valueParameter, objectDescription.ExtensionMemberInfo.MemberName),
                     typeof(IDictionary<string, object>));
+                /* Original code
+                var valueExpression = Expression.TypeAs(Expression.PropertyOrField(valueParameter, objectDescription.ExtensionMemberInfo.MemberName),
+                    typeof(IDictionary<string, object>)); */
                 expressions.Add(Expression.IfThen(Expression.ReferenceNotEqual(valueExpression, Expression.Constant(null)), Expression.Call(null,
                     closedMemberInfo, writerParameter, valueExpression, writeSeparator, Expression.Constant(objectDescription.ExtensionMemberInfo.ExcludeNulls),
                     Expression.Constant(knownNames),
@@ -369,8 +370,7 @@ namespace SpanJson.Formatters
                     return Expression.Assign(Expression.PropertyOrField(returnValue, memberInfo.MemberName),
                         Expression.Call(Expression.Field(null, fieldInfo),
                             FindPublicInstanceMethod(formatterType, "Deserialize", readerParameter.Type.MakeByRefType()),
-                            readerParameter));
-                     */
+                            readerParameter)); */
                 };
             }
 
@@ -416,7 +416,9 @@ namespace SpanJson.Formatters
             if (objectDescription.ExtensionMemberInfo != null && objectDescription.Constructor == null)
             {
                 var extensionExpressions = new List<Expression>();
-                var dictExpression = Expression.PropertyOrField(returnValue, objectDescription.ExtensionMemberInfo.MemberName);
+                var dictExpression = ChangedBySP.Changes.GetMemberExpressionForPropertyOrField(returnValue, objectDescription.ExtensionMemberInfo.MemberName);
+                /* Original code
+                var dictExpression = Expression.PropertyOrField(returnValue, objectDescription.ExtensionMemberInfo.MemberName); */
                 var createExpression = objectDescription.ExtensionMemberInfo.MemberType.IsInterface
                     ? Expression.New(typeof(Dictionary<string, object>))
                     : Expression.New(objectDescription.ExtensionMemberInfo.MemberType);
@@ -485,7 +487,9 @@ namespace SpanJson.Formatters
 
                 foreach (var (memberName, hasValueExpression, valueVariable) in additionalAfterCtorParameterExpressions)
                 {
-                    var assignValueExpression = Expression.Assign(Expression.PropertyOrField(returnValue, memberName), valueVariable);
+                    var assignValueExpression = Expression.Assign(ChangedBySP.Changes.GetMemberExpressionForPropertyOrField(returnValue, memberName), valueVariable);
+                    /* Original code
+                    var assignValueExpression = Expression.Assign(Expression.PropertyOrField(returnValue, memberName), valueVariable);*/
                     var assignIfHasValueExpression = Expression.IfThen(hasValueExpression, assignValueExpression);
                     blockExpressions.Add(assignIfHasValueExpression);
                 }

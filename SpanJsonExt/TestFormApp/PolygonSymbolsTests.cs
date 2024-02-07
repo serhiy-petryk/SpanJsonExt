@@ -20,16 +20,6 @@ namespace TestFormApp
         }*/
         public static void Start()
         {
-/*            return Expression.Assign(Expression.PropertyOrField(returnValue, memberInfo.MemberName),
-                Expression.Call(Expression.Field(null, fieldInfo),
-                    FindPublicInstanceMethod(formatterType, "Deserialize", readerParameter.Type.MakeByRefType()),
-                    readerParameter));*/
-
-            // var fi = typeof(cRoot).GetField("count");
-
-            var a1 = new SpanJsonOptions()
-                {NamingConvention = NamingConventions.CamelCase};
-
             var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.json");
             var content1 = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon_04_20240118.Original.json");
             var bytes = System.Text.Encoding.UTF8.GetBytes(content);
