@@ -29,18 +29,18 @@ namespace TestFormApp
 
         #region ===========  Json SubClasses  ===========
 
-        private class cRoot
+        public class cRoot
         {
             public int count;
             private int privateField;
             private int privateProperty { get; set; }
             public int Count { get; set; } //=> count;
-            public string Next_url;
+            public string next_url;
             public string request_id;
-            public cItem[] Results;
-            public string Status;
+            public cItem[] results;
+            public string status;
         }
-        private class cItem
+        public class cItem
         {
             public string ticker;
             public string name;

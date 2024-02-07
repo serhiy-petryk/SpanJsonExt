@@ -35,11 +35,12 @@ namespace TestFormApp
             // Performance.PerfomanceTest.Start_OnlyReadZipFile();
             // Performance.PerfomanceTest.Start_ReadZipFileAndDeserialize();
 
-            Data.Actions.Polygon.PolygonMinuteScan.Start();
+            // Data.Actions.Polygon.PolygonMinuteScan.Start();
+
             // PolygonDayTests.Start();
             // PolygonSymbolsTests.Start();
 
-            // Tests.Resolvers.Start();
+            Tests.Resolvers.RunTest();
 
             // UnquotedName.Tests.StartUtf8();
             // UnquotedName.Tests.StartUtf16();
