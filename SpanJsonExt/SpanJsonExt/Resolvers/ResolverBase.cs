@@ -68,6 +68,8 @@ namespace SpanJson.Resolvers
         where TResolver : IJsonFormatterResolver<TSymbol, TResolver>, new() where TSymbol : struct
     {
         private readonly SpanJsonOptions _spanJsonOptions;
+        // changed by sp: added line
+        public SpanJsonOptions SpanJsonOptions => _spanJsonOptions;
 
         // ReSharper disable StaticMemberInGenericType
         private static readonly ConcurrentDictionary<Type, IJsonFormatter> Formatters =

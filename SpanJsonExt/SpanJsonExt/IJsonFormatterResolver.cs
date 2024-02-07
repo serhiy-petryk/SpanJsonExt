@@ -14,6 +14,8 @@ namespace SpanJson
     public interface IJsonFormatterResolver<TSymbol, in TResolver> : IJsonFormatterResolver
         where TResolver : IJsonFormatterResolver<TSymbol, TResolver>, new() where TSymbol : struct
     {
+        // changed by sp: added
+        SpanJsonOptions SpanJsonOptions { get; }
         IJsonFormatter<T, TSymbol> GetFormatter<T>();
         JsonObjectDescription GetObjectDescription<T>();
 

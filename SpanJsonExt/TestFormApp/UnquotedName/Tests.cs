@@ -23,9 +23,10 @@ namespace TestFormApp.UnquotedName
             // var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(Json2);
             var content1 = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.Original.json");
             var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.json");
-            var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRootSymbols>(content, Options);
+            // var oo1 = SpanJson.JsonSerializer.NonGeneric.Utf16.Deserialize(content, typeof(cRootSymbols));
+         /*   var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRootSymbols>(content, Options);
             var oo2 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(LiveContent, Options);
-            var oo3 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(LiveContent, Options);
+            var oo3 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(LiveContent, Options);*/
         }
 
         public static void StartUtf8()
@@ -33,21 +34,22 @@ namespace TestFormApp.UnquotedName
             // var oo = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<cRoot>(Json2);
             var content1 = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.Original.json");
             var content = File.ReadAllText(@"E:\Quote\WebData\Symbols\Polygon2003\SymbolsPolygon.json");
+/*            var oo1 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<object>(ToBytes(content), Options);
             var oo = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRootSymbols>(ToBytes(content), Options);
             var oo2 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(ToBytes(LiveContent), Options);
-            var oo3 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(ToBytes(LiveContent), Options);
+            var oo3 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<cRoot>(ToBytes(LiveContent), Options);*/
 
             byte[] ToBytes(string s) => System.Text.Encoding.UTF8.GetBytes(s);
         }
 
 
         #region =======  Json subclasses  =============
-        private class cRoot
+        public class cRoot
         {
             public string type;
             public cData data;
         }
-        private class cData
+        public class cData
         {
             public string action;
             public string type;
