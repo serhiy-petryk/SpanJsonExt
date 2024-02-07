@@ -765,6 +765,7 @@ namespace SpanJson
                     case (byte)'\t':
                     case (byte)'\r':
                     case (byte)'\n':
+                    case 0xA0:
                     {
                         pos++;
                         continue;
