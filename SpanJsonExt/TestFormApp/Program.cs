@@ -33,9 +33,9 @@ namespace TestFormApp
             // StreamTests.TestZipStream();*/
 
             // Performance.PerfomanceTest.Start_OnlyReadZipFile();
-            Performance.PerfomanceTest.Start_ReadZipFileAndDeserialize();
+            // Performance.PerfomanceTest.Start_ReadZipFileAndDeserialize();
 
-            // Data.Actions.Polygon.PolygonMinuteScan.Start();
+            Data.Actions.Polygon.PolygonMinuteScan.Start();
             // PolygonDayTests.Start();
             // PolygonSymbolsTests.Start();
 
