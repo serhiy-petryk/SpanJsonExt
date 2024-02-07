@@ -667,6 +667,7 @@ namespace SpanJson
                     case '\t':
                     case '\r':
                     case '\n':
+                    // change by SP: added
                     case (char)0xA0:
                     {
                         pos++;
