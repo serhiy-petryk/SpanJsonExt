@@ -14,10 +14,10 @@ namespace TestFormApp.Tests
             public CustomResolver() : base(new SpanJsonOptions
             {
                 NullOption = NullOptions.ExcludeNulls,
-                NamingConvention = NamingConventions.CamelCase,
+                NamingConvention = NamingConventions.OriginalCase,
                 EnumOption = EnumOptions.Integer,
-                AllowUnquotedStrings = true
-                // ByteArrayOptions = ByteArrayOptions.Base64
+                AllowUnquotedStrings = true,
+                ByteArrayOption =  ByteArrayOptions.Array
             })
             {
             }
@@ -36,7 +36,7 @@ namespace TestFormApp.Tests
         public static void RunTest()
         {
             var options = new SpanJsonOptions {AllowUnquotedStrings = true};
-            var oo1 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<UnquotedName.Tests.cRoot>(ToBytes(LiveContent), options);
+            // var oo1 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<UnquotedName.Tests.cRoot>(ToBytes(LiveContent), options);
             var oo2 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<PolygonSymbolsTests.cRoot>(ToBytes(SpContent));
 
             byte[] ToBytes(string s) => System.Text.Encoding.UTF8.GetBytes(s);
