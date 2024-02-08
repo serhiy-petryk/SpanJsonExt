@@ -7,7 +7,8 @@ This is the https://github.com/Tornhoof/SpanJson project with some changes for d
 4. Added ``0xA0`` symbol in ``SkipWhitespaceUtf8/16`` methods.
 
 ### Code example for AllowUnquotedStrings property ###
-```// Define custom resolver class    
+```
+// Define custom resolver class    
 public sealed class CustomResolver<TSymbol> : ResolverBase<TSymbol, CustomResolver<TSymbol>> where TSymbol : struct
 {
     public CustomResolver() : base(new SpanJsonOptions
