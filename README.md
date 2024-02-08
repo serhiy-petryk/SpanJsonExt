@@ -16,7 +16,7 @@ public sealed class CustomResolver<TSymbol> : ResolverBase<TSymbol, CustomResolv
         NullOption = NullOptions.ExcludeNulls,
         NamingConvention = NamingConventions.CamelCase,
         EnumOption = EnumOptions.Integer,
-        AllowUnquotedStrings = true,
+        ``AllowUnquotedStrings`` = true,
         ByteArrayOption =  ByteArrayOptions.Array
     })
     {
