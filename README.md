@@ -26,4 +26,5 @@ public sealed class CustomResolver<TSymbol> : ResolverBase<TSymbol, CustomResolv
 public static void Start()
 {
     var o = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<UnquotedName.Tests.cRoot, CustomResolver<byte>>(byteArray);
-}```
+}
+```
