@@ -26,6 +26,7 @@ public sealed class CustomResolver<TSymbol> : ResolverBase<TSymbol, CustomResolv
 // Deserialization example
 public static void Start()
 {
-    var o = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<UnquotedName.Tests.cRoot, CustomResolver<byte>>(byteArray);
+    var o1 = SpanJson.JsonSerializer.Generic.Utf8.Deserialize<UnquotedName.Tests.cRoot, CustomResolver<byte>>(byteArray);
+    var o2 = SpanJson.JsonSerializer.Generic.Utf16.Deserialize<UnquotedName.Tests.cRoot, CustomResolver<char>>(contentString);
 }
 ```
