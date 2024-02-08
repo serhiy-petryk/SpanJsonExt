@@ -14,7 +14,7 @@ public sealed class CustomResolver<TSymbol> : ResolverBase<TSymbol, CustomResolv
     public CustomResolver() : base(new SpanJsonOptions
     {
         NullOption = NullOptions.ExcludeNulls,
-        NamingConvention = NamingConventions.CamelCase,
+        NamingConvention = NamingConventions.OriginalCase,
         EnumOption = EnumOptions.Integer,
         AllowUnquotedStrings = true,
         ByteArrayOption =  ByteArrayOptions.Array
